@@ -20,6 +20,11 @@ public:
 	{
 		return mx;
 	}
+	explicit operator int()
+	{
+		return mx + 1;
+	}
+
 
 private:
 	int mx{};
