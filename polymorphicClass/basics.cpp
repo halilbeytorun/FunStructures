@@ -6,6 +6,25 @@
 class Car
 {
 public:
+
+	/*
+	* Otherwise, there would be run time error since Base class ctor is called before derived class ctor. So calling derived class virtual function before initializing it would
+		be mistake.
+		--> Same is the case for the destructor, similar reasoning.
+
+	*/
+	Car()	// ctor calls does not activate virtual dispatch!!!!
+	{
+		start();
+		run();
+		stop();
+	}
+	~Car()	// dtor calls does not activate virtual dispatch!!!!
+	{
+		start();
+		run();
+		stop();
+	}
 	virtual void start()
 	{
 		std::cout << "Car has just started\n";
@@ -23,6 +42,12 @@ public:
 		start();
 		run();
 		stop();
+
+		// // Calling these member functions won't activate virtual dispatch.
+		//Car::start();
+		//Car::run();
+		//Car::stop();
+
 	}
 };
 
@@ -233,10 +258,18 @@ void car_game(Car* p)
 
 int main()
 {
-	for (int i = 0; i < 10; i++)
-	{
-		Car* p = create_random_car();
-		std::cout << "\n";
-		car_game(p);
-	}
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	Car* p = create_random_car();
+	//	std::cout << "\n";
+	//	car_game(p);
+	//}
+
+	//{// testing ctor, dtor virtual dispatch mechanism.
+	//	Volvo vx;
+	//}
+
+	Volvo vx;
+
+
 }
