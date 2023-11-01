@@ -7,14 +7,15 @@ class Car
 {
 public:
 
-	/*
-	* Otherwise, there would be run time error since Base class ctor is called before derived class ctor. So calling derived class virtual function before initializing it would
+
+	Car()	// ctor calls does not activate virtual dispatch!!!!
+	{
+		/*
+		* Otherwise, there would be run time error since Base class ctor is called before derived class ctor. So calling derived class virtual function before initializing it would
 		be mistake.
 		--> Same is the case for the destructor, similar reasoning.
 
-	*/
-	Car()	// ctor calls does not activate virtual dispatch!!!!
-	{
+		*/
 		start();
 		run();
 		stop();
@@ -25,6 +26,17 @@ public:
 		run();
 		stop();
 	}
+
+	///  clone idiom
+	virtual Car* clone() = 0;	// Car class is abstract class now.
+
+	friend std::ostream& operator<<(std::ostream& os, const Car& c)
+	{
+		c.print(os);
+		return os;
+	}
+	virtual void print(std::ostream& os) const = 0;
+
 	virtual void start()
 	{
 		std::cout << "Car has just started\n";
@@ -55,6 +67,15 @@ public:
 class Volvo : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Volvo(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Volvo\n";
+	}
+
 	void open_sunroof()
 	{
 		std::cout << "Volvo sunroof opened!!!\n";
@@ -77,6 +98,14 @@ public:
 class VolvoXC90 : public Volvo
 {
 public:
+	Car* clone() override
+	{
+		return new VolvoXC90(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a VolvoXC90\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "VolvoXC90 Car has just started\n";
@@ -94,6 +123,14 @@ public:
 class Mercedes : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Mercedes(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Mercedes\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "MERCEDES Car has just started\n";
@@ -112,6 +149,14 @@ public:
 class Opel : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Opel(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Opel\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "OPEL Car has just started\n";
@@ -129,6 +174,14 @@ public:
 class Fiat : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Fiat(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Fiat\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "FIAT Car has just started\n";
@@ -146,6 +199,14 @@ public:
 class Audi : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Audi(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Audi\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "AUDI Car has just started\n";
@@ -164,6 +225,14 @@ public:
 class Honda : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Honda(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Honda\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "HONDA Car has just started\n";
@@ -182,6 +251,14 @@ public:
 class Togg : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Togg(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Togg\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "TOGG Car has just started\n";
@@ -201,6 +278,14 @@ public:
 class Dacia : public Car
 {
 public:
+	Car* clone() override
+	{
+		return new Dacia(*this);
+	}
+	virtual void print(std::ostream& os)const  override
+	{
+		os << "I am a Dacia\n";
+	}
 	void start() override	// should write override, writing virtual here does not matter, the word is in there by default once we override it from base class.
 	{
 		std::cout << "DACIA Car has just started\n";
@@ -270,6 +355,6 @@ int main()
 	//}
 
 	Volvo vx;
-
+	std::cout << vx;
 
 }
