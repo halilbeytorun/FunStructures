@@ -67,7 +67,7 @@ public:
 class Volvo : public Car
 {
 public:
-	Car* clone() override
+	Volvo* clone() override
 	{
 		return new Volvo(*this);
 	}
@@ -98,7 +98,7 @@ public:
 class VolvoXC90 : public Volvo
 {
 public:
-	Car* clone() override
+	VolvoXC90* clone() override
 	{
 		return new VolvoXC90(*this);
 	}
@@ -123,7 +123,7 @@ public:
 class Mercedes : public Car
 {
 public:
-	Car* clone() override
+	Mercedes* clone() override
 	{
 		return new Mercedes(*this);
 	}
@@ -149,7 +149,7 @@ public:
 class Opel : public Car
 {
 public:
-	Car* clone() override
+	Opel* clone() override
 	{
 		return new Opel(*this);
 	}
@@ -174,7 +174,7 @@ public:
 class Fiat : public Car
 {
 public:
-	Car* clone() override
+	Fiat* clone() override
 	{
 		return new Fiat(*this);
 	}
@@ -199,7 +199,7 @@ public:
 class Audi : public Car
 {
 public:
-	Car* clone() override
+	Audi* clone() override
 	{
 		return new Audi(*this);
 	}
@@ -225,7 +225,7 @@ public:
 class Honda : public Car
 {
 public:
-	Car* clone() override
+	Honda* clone() override
 	{
 		return new Honda(*this);
 	}
@@ -251,7 +251,7 @@ public:
 class Togg : public Car
 {
 public:
-	Car* clone() override
+	Togg* clone() override
 	{
 		return new Togg(*this);
 	}
@@ -278,7 +278,7 @@ public:
 class Dacia : public Car
 {
 public:
-	Car* clone() override
+	Dacia* clone() override
 	{
 		return new Dacia(*this);
 	}
@@ -356,5 +356,6 @@ int main()
 
 	Volvo vx;
 	std::cout << vx;
+	Volvo* ma_clone = vx.clone();	// writing like this is valid because of covariance.
 
 }
