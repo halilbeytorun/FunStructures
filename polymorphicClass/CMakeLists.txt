@@ -11,4 +11,7 @@ add_executable(basics_target basics.cpp)
 add_executable(virtualDispatchAccessControl1_target virtualDispatchAccessControl1.cpp)
 add_executable(virtualDispatchAccessControl2_target virtualDispatchAccessControl2.cpp)
 add_executable(typeid_vs_dynamic_cast_target typeid_vs_dynamic_cast.cpp)
+add_executable(diamondProblem_target diamondProblem.cpp)
+
+
 
