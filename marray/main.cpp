@@ -59,8 +59,13 @@ private:
 
 int main()
 {
-	const marray<double, 5> mDoubleArray{};
+	const marray<double, 5> mConstDoubleArray{};
 	//double value  = mDoubleArray[10];
-	std::cout << *(mDoubleArray.operator+(5));
+	std::cout << *(mConstDoubleArray.operator+(2));
+
+	marray<double, 10> mDoubleArray{};
+	mDoubleArray[1] = (double)10;
+	int a = 2;
+
 	return 0;
 }
