@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(throwOnlyTerminate throwOnlyTerminate.cpp)
 add_executable(basics basics.cpp)
+add_executable(stackUnwinding stackUnwinding.cpp)
 
 
 
