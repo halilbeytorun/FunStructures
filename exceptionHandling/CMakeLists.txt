@@ -11,6 +11,7 @@ add_executable(throwOnlyTerminate throwOnlyTerminate.cpp)
 add_executable(basics basics.cpp)
 add_executable(stackUnwinding stackUnwinding.cpp)
 add_executable(rethrow rethrow.cpp)
+add_executable(noexceptThrows noexceptThrows.cpp)
 
 
 
