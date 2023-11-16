@@ -15,7 +15,7 @@ void bar()
 	{
 		std::cout << "error is catched in bar function...\n";
 		std::cout << "the address of the exception object is: " << &ex << "\n";
-		//throw ex;	// object slicing will occur here.
+		//throw ex;	// object slicing will occur here.!!!!
 		throw;
 	}
 }

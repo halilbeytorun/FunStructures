@@ -5,7 +5,7 @@
 
 void mytermiante()
 {
-	std::cout << "I am metermiante function...\n";
+	std::cout << "I am mytermiante function...\n";
 	/// ....
 	std::exit(EXIT_FAILURE);
 }
@@ -36,7 +36,7 @@ void f1()
 }
 int main()
 {
-	auto f = std::set_terminate(&mytermiante);	// this function is called only in release mode for MSVS.
+	auto f = std::set_terminate(&mytermiante);	// this function is called only in release mode for MSVC.
 	std::cout << std::boolalpha << (f == &abort) << "\n";
 	f1();
 	std::cout << "main returns\n";
