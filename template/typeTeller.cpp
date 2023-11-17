@@ -25,7 +25,7 @@ int main()
 
 	int x{};
 	//bar(x);	// T is int&	arg is int&
-	bar(1);	// T is int		arg is int&&
+	//bar(1);	// T is int		arg is int&&
 	
 }
 

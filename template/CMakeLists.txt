@@ -9,4 +9,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(typeTeller_target typeTeller.cpp)
 add_executable(typeDeduction_target typeDeduction.cpp)
+add_executable(SFINAE_target SFINAE.cpp)
+add_executable(template_n_range_target template_n_range.cpp)
 
