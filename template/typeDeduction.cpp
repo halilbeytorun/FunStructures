@@ -76,7 +76,7 @@ int main()
 
 	int x{};
 	//bar(x, x);	// Error, T is int for first function parameter but T is int & for the second function parameter.
-	bar(10, 1);	// Ok T is int for first and second template paraemters. Template type deduction is same for auto type deduction, except for initializer_list
+	bar(10, 1);	// Ok T is int for first and second template paraemters. Template argument deduction is same for auto type deduction, except for initializer_list
 	bar(x, std::move(x));	// OK, for R value expressions forwarding referance template argument will be T. For L value expressions, It will be T&	--> referance collapsing.
 
 
