@@ -88,6 +88,6 @@ int main()
 
 	func(Myclass{});
 
-	my_remove_pointer<int*const>::type;
+	typename my_remove_pointer<int*const>::type testing;
 }
 
