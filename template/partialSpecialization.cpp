@@ -70,6 +70,55 @@ struct Power<base, 0>
 	static const int value = 1;
 };
 
+template<typename T, int n>
+void foo(T(&a)[n])
+{
+
+}
+// this is error since partial specialization is not legal for function templates.
+//template<typename T>
+//void foo<T, 1>(T(&a)[1])
+//{
+//
+//}
+//
+
+template<typename T, typename U>
+struct sameType
+{
+	sameType()
+	{
+		std::cout << "sameType Primary template\n";
+	}
+};
+
+template<typename T>
+struct sameType<T, T>	// partial specialization used for same types..
+{
+	sameType()
+	{
+		std::cout << "sameType partial specialization\n";
+	}
+};
+
+template<typename T>
+struct tupleSpec // Primary template
+{};
+template<typename T, typename U, typename K, typename M>
+struct tupleSpec<std::tuple<T, U, K, M>>
+{};
+template<typename T>
+struct tupleSpec<std::tuple<T>>
+{};
+
+
+template<typename T>
+void tupleSpecFunc() {}
+// this is again illegal
+//template<typename T>
+//void tupleSpecFunc<std::tuple<T>>()
+//{}
+
 
 template<typename T>
 struct IsPointer : std::false_type {};
@@ -90,4 +139,8 @@ int main()
 
 	IsPointer<int>::value;
 	IsPointer<int*>::value;
+
+	sameType<int, int> testing;
+	tupleSpec < std::tuple<int, int, double, long>> testtupleSpec;
+	tupleSpec<std::tuple<int>> testtupleSpec1;
 }
