@@ -2,10 +2,10 @@
 
 
 template<typename T>
-typename T foo(T) {}
+T foo(T) {}
 
 template<>
-typename int foo(int) { return {}; }
+int foo(int) { return {}; }
 
 void foo(int) {}
 
