@@ -68,7 +68,7 @@ int main()
 	baz_forward(a);
 
 	auto init_list_var = { 1,2,3,4 };		// auto is initilizer_list
-	//baz({ 1,2,3,4 });				// this is synhax error The only difference int type deduction between auto and template.
+	//baz({ 1,2,3,4 });				// this is synhax error The only different type deduction between auto and template.
 
 
 	foo(1, 1);

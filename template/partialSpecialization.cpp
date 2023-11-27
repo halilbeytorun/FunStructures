@@ -17,7 +17,7 @@ class Myclass<T*>	// partial specialization for pointer types
 public:
 	Myclass()
 	{
-		std::cout << "Myclass Primary template for T*" << '\n';
+		std::cout << "Myclass partial specialization for T*" << '\n';
 	}
 };
 template<typename T>
@@ -26,7 +26,7 @@ class Myclass<T[]>	// partial specialization for pointer types
 public:
 	Myclass()
 	{
-		std::cout << "Myclass Primary template for T[]" << '\n';
+		std::cout << "Myclass partial specialization for T[]" << '\n';
 	}
 };
 
@@ -36,7 +36,7 @@ class Myclass<T[5]>	// partial specialization for pointer types
 public:
 	Myclass()
 	{
-		std::cout << "Myclass Primary template for T[5]" << '\n';
+		std::cout << "Myclass partial specialization for T[5]" << '\n';
 	}
 };
 

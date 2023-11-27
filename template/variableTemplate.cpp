@@ -16,7 +16,7 @@ constexpr bool isLValueRef_v = isLValueRef<T>::value;
 template<typename T>
 void foo(T x)
 {
-	static_assert(!std::is_pointer_v<T> || !std::is_reference_v<T>, "does not accept pointer or referance.");
+	static_assert(!std::is_pointer_v<T>, "does not accept pointer.");
 }
 
 
@@ -25,5 +25,5 @@ int main()
 	constexpr auto x = pi<double>;
 	int arr[pi<int>]{};
 	constexpr auto val = isLValueRef_v<bool>;
-	foo(arr);
+	//foo(arr);
 }
