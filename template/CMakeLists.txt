@@ -15,4 +15,5 @@ add_executable(perfectForwarding_target perfectForwarding.cpp)
 add_executable(explicitSpecialization_target explicitSpecialization.cpp)
 add_executable(partialSpecialization_target partialSpecialization.cpp)
 add_executable(aliasTemplate_target aliasTemplate.cpp)
+add_executable(variableTemplate_target variableTemplate.cpp)
 
