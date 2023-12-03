@@ -6,3 +6,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED 1)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(iteratorCategories_target iteratorCategories.cpp)
+add_executable(algorithms_target algorithms.cpp)
