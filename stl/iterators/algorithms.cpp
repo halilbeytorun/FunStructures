@@ -6,12 +6,14 @@
 #include<algorithm>
 
 /*
-	* iterator categories
+* 
+* iterator categories
 	- Input iterator-- > input_iterator_tag
 	- output iterator-- > output_iterator_tag
 	- forward iterator-- > forward_iterator_tag
 	- bideractional iterator-- > bidirectional_iterator_tag
 	- random - access iterator-- > random_access_iterator_tag
+*
 */
 
 template<typename ...Ts>
@@ -27,6 +29,21 @@ void Logger(C& container, typename C::value_type* = nullptr)
 		std::cout << i << ' ';
 	}
 	std::cout << '\n';
+}
+
+template<typename InIter, typename Ty>
+int Count(InIter beg, InIter end, const Ty& val)
+{
+	int count{};
+	while (beg != end)
+	{
+		if (val == *beg)
+		{
+			count++;
+		}
+		beg++;
+	}
+	return count;
 }
 
 
@@ -45,12 +62,26 @@ OutIter Copy(InIter beg, InIter end, OutIter destbeg)
 	return destbeg;
 }
 
+// Finds the first key value found in the container. Iter can be iterator or reverse iterator.
 template<typename InIter, typename Key>
 InIter Find(InIter beg, InIter end, const Key& key)
 {
 	while (beg != end)
 	{
 		if (*beg == key)
+		{
+			return beg;
+		}
+		beg++;
+	}
+}
+
+template<typename InIter, typename Pr>
+InIter Find_If(InIter beg, InIter end, Pr cond)
+{
+	while (beg != end)
+	{
+		if (cond(*beg))
 		{
 			return beg;
 		}
@@ -90,10 +121,57 @@ BackInsertIterator<C> BackInserter(C& c)
 	return BackInsertIterator<C>{c};
 }
 
+
+// UFunc does not have to be predicate (bool return) but it needs to be unary.
+// Note that algorithms what write in range returns after last position it writes.
+template<typename InIter, typename OutIter, typename UFunc>
+OutIter Transform(InIter beg, InIter end, OutIter destbeg, UFunc f)
+{
+	while (beg != end)
+	{
+		*destbeg++ = f(*beg++);
+	}
+	return destbeg;
+}
+
+
+
+// UFunc does not have to be predicate (bool return) but it needs to be binary.
+// Note that algorithms what write in range returns after last position it writes.
+template<typename InIter1, typename InIter2, typename OutIter, typename BiFunc>
+OutIter Transform(InIter1 beg1, InIter1 end, InIter2 beg2, OutIter destbeg, BiFunc f)
+{
+	while (beg1 != end)
+	{
+		*destbeg++ = f(*beg1++, *beg2++);
+	}
+	return destbeg;
+}
+
+template<typename Iter, typename Ufunc>
+Ufunc Foreach(Iter beg, Iter end, Ufunc f)
+{
+	while (beg != end)
+	{
+		f(*beg++);
+	}
+	return f;	// return the callable because f can be callable object.
+}
+
+
 int main()
 {
+	
+	{
+		Logger("count algorithm:");
+		std::vector<int> ivec{ 1,2,3,3,3,3,5,6,7 };
+		auto result = Count(ivec.begin(), ivec.end(), 3);
+		Logger("Counted: ", 3, " and result is: ", result);
+
+	}
 
 	{
+		Logger("Copy algorithm written by me:");
 		std::vector<int>::value_type;
 		std::vector<double>::iterator::value_type;
 
@@ -104,6 +182,7 @@ int main()
 		Logger(ilist);
 	}
 	{
+		Logger("Note that undefined behaviour would happen if destionation container does not have enoguh space and back_inserter is not used");
 		std::vector<int>::value_type;
 		std::vector<double>::iterator::value_type;
 
@@ -112,10 +191,26 @@ int main()
 		// Undefined behaviour would happen if we call Copy
 		//Copy(ivec.begin(), ivec.end(), ilist.begin());
 	}
+
+	{
+		Logger("Find algorithm written by me:");
+		std::vector<int> ivec{ 1,2,3,4,5,6 };
+		Logger(ivec);
+		auto iter = Find(ivec.begin(), ivec.end(), 2);
+		Logger("the found result is: ", *iter);
+		iter = Find_If(ivec.begin(), ivec.end(), [](const int a) {return a == 5; });
+		Logger("the found result is: ", *iter);
+	}
+
 	{// random access iterator
-		std::vector<int> ivec(10);
+		Logger("random access iterator category: std::vector<int>::iterator:iterator_category");
+		std::vector<int> ivec{2,1,8,2,5,9,10,1,16,32};
 		// notice that sort algorithm is designed for random access iterator categoty. (we can understand that from looking into sort function template parameter name)
+		Logger(ivec);
 		std::sort(ivec.begin(), ivec.end());
+		Logger(ivec);
+		std::sort(ivec.rbegin(), ivec.rend());
+		Logger(ivec);
 
 		std::list<int> ilist(10);
 		// std::sort(ilist.begin(), ilist.end()); // this is error.
@@ -123,6 +218,7 @@ int main()
 
 
 	{
+		Logger("Back Insert Iterator example: ");
 		std::vector<int>::value_type;
 		std::vector<double>::iterator::value_type;
 
@@ -130,7 +226,50 @@ int main()
 		std::list<int> ilist;
 		// Undefined behaviour would NOT HAPPEN
 		Copy(ivec.begin(), ivec.end(), BackInserter(ilist));
-		Logger("BackInsertIterator :");
 		Logger(ilist);
+	}
+
+
+	// Transform
+	{
+		std::vector<std::string> svec{"halil", "ibo", "ahmetwtwtwtw"};
+		std::vector<std::size_t> lvec;
+		Logger("Transform function implementation......");
+		Transform(svec.begin(), svec.end(), BackInserter(lvec), [](const std::string& s) {return s.length(); });
+		Logger(lvec);
+
+		Transform(svec.rbegin(), svec.rend(), BackInserter(lvec), [](const std::string& s) {return s.size(); });
+		Logger(lvec);
+
+		// Operate on itself.
+		Transform(svec.begin(), svec.end(), svec.begin(), [](std::string& s) { std::reverse(s.begin(), s.end()); return s; });
+		Logger(svec);
+
+	}
+
+	{
+		int a[] = { 1,3,5,7,12,67, 20, 56, 90 };
+		std::vector<int> ivec = { 11,22,33,12, 41, 12, 32, 98, 89 };
+		std::list<int> my_list;
+		Logger("Double Transform function implementation......");
+		// The caller is responsible for the equality of .size of both containers
+		Transform(std::begin(a), std::end(a), std::begin(ivec), std::back_inserter(my_list), [](const int a, const int b) {return a * a + b * b; });
+		Logger(my_list);
+	}
+
+	{
+		Logger("For each function implementation......");
+		std::vector<int> ivec = { 1,3,5,6,1,15,5,2,7,87,97,1 };
+		Foreach(std::begin(ivec), std::end(ivec), [](int& a) {a++; });
+		Logger(ivec);
+	}
+
+	{
+		Logger("any_of, all_of, none_of examples....");
+		std::vector<int> ivec{ 2,4,2,2,2,6,0 };
+		Logger(std::any_of(ivec.begin(), ivec.end(), [](int x) {return x % 2 != 0; }));
+		Logger(std::all_of(ivec.begin(), ivec.end(), [](int x) {return x % 2 == 0; }));
+		Logger(std::none_of(ivec.begin(), ivec.end(), [](int x) {return x % 2 != 0; }));
+
 	}
 }
