@@ -159,6 +159,7 @@ Ufunc Foreach(Iter beg, Iter end, Ufunc f)
 }
 
 
+
 int main()
 {
 	
@@ -270,6 +271,21 @@ int main()
 		Logger(std::any_of(ivec.begin(), ivec.end(), [](int x) {return x % 2 != 0; }));
 		Logger(std::all_of(ivec.begin(), ivec.end(), [](int x) {return x % 2 == 0; }));
 		Logger(std::none_of(ivec.begin(), ivec.end(), [](int x) {return x % 2 != 0; }));
+	}
 
+	{
+		Logger("max element");
+		std::vector<std::string> svec{"halia", "zeynep", "a1", "a2", "a3", "a3", "a5"};
+		Logger(svec);
+		auto iter=std::max_element(svec.begin(), svec.end());
+		Logger("max = ", *iter, " max idx = ", std::distance(svec.begin(), iter));
+		std::advance(iter, 3);
+		Logger("max = ", *iter, " max idx = ", std::distance(svec.begin(), iter));
+
+		auto mpair = std::minmax_element(svec.begin(), svec.end());
+		Logger(*mpair.first," ", * mpair.second);
+
+		auto [first, second] = std::minmax_element(svec.begin(), svec.end());	// structured_binding
+		Logger(*first, " ", *second);
 	}
 }
