@@ -9,4 +9,5 @@ add_executable(vector_add_element_target vector_add_element.cpp)
 add_executable(vector_iterators_target vector_iterators.cpp)
 add_executable(vector_constructors_target vector_constructors.cpp)
 add_executable(vector_other_functions_target vector_other_functions.cpp)
+add_executable(vector_change_size_target vector_change_size.cpp)
 
