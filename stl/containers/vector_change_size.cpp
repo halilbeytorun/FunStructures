@@ -59,4 +59,65 @@ int main()
 		svec.assign(10, "halil");
 		Logger(svec);
 	}
+	{// insert
+		Logger("insert function");
+		std::vector<std::string> svec{ "halil", "veli", "coding" };
+		std::list<std::string> names{ "BURAK", "FEDAI" };
+		Logger(svec);
+		svec.insert(svec.begin(), "ali");
+		Logger(svec);
+		svec.insert(std::next(svec.begin()), "deli");
+		svec.insert(svec.end(), "ahmet");
+		Logger(svec);
+		svec.insert(svec.begin(), { "zeki", "dogu", "dicle" });	// initializer list insert
+		svec.insert(svec.begin(), 3, "bilal");					// fill insert
+		Logger(svec);
+		auto iter = svec.insert(svec.begin(), names.begin(), names.end());// range insert.
+		Logger(svec);
+		Logger(*iter);
+	}
+
+
+	{// emplace
+		Logger("emplace function");
+		std::vector<std::string> svec{ "halil", "veli", "coding" };
+		std::list<std::string> names{ "BURAK", "FEDAI" };
+		Logger(svec);
+		svec.emplace(svec.begin(), "ali");
+		Logger(svec);
+		svec.emplace(std::next(svec.begin()), "deli");
+		svec.emplace(svec.end(), "ahmet");
+		Logger(svec);
+		svec.emplace(svec.begin(), 20, 'T');	// emplace passes these values into string's ctor
+		Logger(svec);
+		auto iter = svec.emplace(svec.begin(), *names.begin());
+		Logger(svec);
+		//Logger(*iter);
+	}
+
+	{
+		// remove element pop_back
+		Logger("remove element, pop_back");
+		std::vector<std::string> tvec{ "halil", "ali", "veli", "deli", "ahmet", "mahmet", "gunes", "ates"};
+		while (!tvec.empty())
+		{
+			tvec.pop_back();
+			Logger(tvec);
+		}
+	}
+
+
+	{
+		// remove element erase
+		Logger("remove element, pop_back");
+		std::vector<std::string> tvec{ "halil", "ali", "veli", "deli", "ahmet", "mahmet", "gunes", "ates" };
+		auto iter = tvec.erase(tvec.begin());
+		Logger(tvec);
+		Logger(*iter);
+		tvec.erase(prev(tvec.end()));
+		Logger(tvec);
+		tvec.erase(tvec.begin(), tvec.end() - 1);
+		Logger(tvec);
+	}
+
 }
