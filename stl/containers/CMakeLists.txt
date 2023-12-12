@@ -11,4 +11,5 @@ add_executable(vector_constructors_target vector_constructors.cpp)
 add_executable(vector_other_functions_target vector_other_functions.cpp)
 add_executable(vector_change_size_target vector_change_size.cpp)
 add_executable(vector_comparison_target vector_comparison.cpp)
+add_executable(vector_algorithms_target vector_algorithms.cpp)
 
