@@ -10,6 +10,7 @@ void bar()
 	try
 	{
 		throw std::out_of_range{ "value out of range" };
+		//throw std::exception{};
 	}
 	catch (const std::exception& ex)
 	{

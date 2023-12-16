@@ -59,10 +59,11 @@ int main()
 	{
 		f1();
 	}
-	// destructors of the object created are called before going in here. If there would not be a cath function, 
+	// destructors of the object created are called before going in here. If there would not be a catch function, 
 	//	std::terminate function would call abort function and destructors would not be called. Notice the importance of RAII
 	catch (const std::exception&)
 	{
+		std::cout << "Stopped at catch, notice destructor calls and understand the importance of RAII.\n";
 		(void)getchar();
 	}
 }

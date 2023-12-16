@@ -52,7 +52,7 @@ public:
 void f4()
 {
 	std::cout << "f4 called\n";
-	throw Der{};// Change the throw expression here to play.
+	throw Mer{};// Change the throw expression here to play.
 	std::cout << "f4 returns\n";
 }
 void f3()
@@ -102,7 +102,7 @@ int main()
 	// default case.
 	catch (...)
 	{
-		std::cout << "exception caught in function main catch(...)\n";
+		std::cout << "exception caught in function main catch(...) this should be in the last place for other specialized catches to work.\n";
 	}
 }
 
