@@ -25,6 +25,9 @@ int main()
 	std::vector<int> ivec{10,2,56};
 	std::vector<int>::const_iterator a = ivec.begin();
 	auto citer = ivec.cbegin();
+
+	const std::vector<int> ivec2{ 1,2,3,4 };
+	auto constobjectIter = ivec2.begin();	// this is also contant iterator.
 	Logger( "value hold by constant iterator: ", * citer);
 
 }

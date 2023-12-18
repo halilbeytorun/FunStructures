@@ -162,17 +162,23 @@ Ufunc Foreach(Iter beg, Iter end, Ufunc f)
 
 int main()
 {
+	/*
+	* Algorithms in here are:
+	* std::count, std::count_if, std::copy, std::copy_if, std::find, std::find_if, std::sort, std::tranform (2 overload), std::for_each
+	*/
 	
 	{
 		Logger("count algorithm:");
 		std::vector<int> ivec{ 1,2,3,3,3,3,5,6,7 };
 		auto result = Count(ivec.begin(), ivec.end(), 3);
 		Logger("Counted: ", 3, " and result is: ", result);
+		// there is also count if algorithm
+		//std::count() // the template parameter names says that it requires min input iterator
 
 	}
 
 	{
-		Logger("Copy algorithm written by me:");
+		Logger("Copy algorithm written by me. Note that destination container can be different container.");
 		std::vector<int>::value_type;
 		std::vector<double>::iterator::value_type;
 
@@ -204,7 +210,7 @@ int main()
 	}
 
 	{// random access iterator
-		Logger("random access iterator category: std::vector<int>::iterator:iterator_category");
+		Logger("std::vector<int>::iterator:iterator_category: ", typeid(std::vector<int>::iterator::iterator_category).name());	// random access iterator category: 
 		std::vector<int> ivec{2,1,8,2,5,9,10,1,16,32};
 		// notice that sort algorithm is designed for random access iterator categoty. (we can understand that from looking into sort function template parameter name)
 		Logger(ivec);
