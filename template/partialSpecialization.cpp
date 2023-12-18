@@ -21,7 +21,7 @@ public:
 	}
 };
 template<typename T>
-class Myclass<T[]>	// partial specialization for pointer types
+class Myclass<T[]>	// partial specialization for array types
 {
 public:
 	Myclass()
@@ -31,7 +31,7 @@ public:
 };
 
 template<typename T>
-class Myclass<T[5]>	// partial specialization for pointer types
+class Myclass<T[5]>	// partial specialization for array[5] types
 {
 public:
 	Myclass()
