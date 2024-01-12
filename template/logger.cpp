@@ -27,21 +27,27 @@ namespace impl
             decltype(std::declval<T>().end())
         >
     > : std::true_type {};
+    template<>
+    struct is_stl_container<std::string> : std::false_type{};
 
-
-
-    template<typename C>
-    std::enable_if_t<is_stl_container<C>::value> LoggerImpl(const C& container)
-    {
-        for (auto i : container)
-        {
-            std::cout << i << ' ';
-        }
-    }
     template<typename T>
     std::enable_if_t<!is_stl_container<T>::value> LoggerImpl(const T& a)
     {
         std::cout << a << " ";
+    }
+
+    template<typename C>
+    std::enable_if_t<is_stl_container<C>::value> LoggerImpl(const C& container)
+    {
+        for (auto iter = container.begin(); iter != container.end(); iter++)
+        {
+            LoggerImpl(*iter);
+            if constexpr(is_stl_container<typename C::value_type>::value)
+            {
+                if(container.end() != std::next(iter))
+                    std::cout << '\n';
+            }
+        }
     }
 
     template<typename T, typename ...Ts>
@@ -50,7 +56,6 @@ namespace impl
         LoggerImpl(a);
         LoggerImpl(args...);
     }
-
 }
 
 
@@ -65,12 +70,7 @@ void Logger(const Ts& ...args)
 
 int main()
 {
-    std::vector<int> ivec{10,10,10,10};
-    Logger(ivec);
-    Logger(1,2,3,4);
-    Logger("testing: ", 1, 2, " container tesing: ", ivec);
-    int x{}, y{};
-    double z{};
-    Logger(x, y, z, 1, 2, 3L, "testing stuff");
+	const char * mumin = "asd\n \t";
+	Logger(mumin);
 }
 
