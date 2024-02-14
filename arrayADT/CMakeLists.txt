@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.5)
 
-project(arrayADP)
+project(arrayADT)
 
-add_executable(arrayADP main.c)
+add_executable(arrayADT main.c)
