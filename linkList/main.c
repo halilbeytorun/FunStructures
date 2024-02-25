@@ -191,19 +191,131 @@ void SortedInsert(struct Node* p, int x)
     }
 }
 
+int Delete(struct Node *p, int index)
+{
+    struct Node *q = NULL;
+    int x = -1;
+
+    if(index < 1 || index > count(p))
+        return -1;
+    
+    if(index == 1)
+    {
+        q = first;
+        x = first->data;
+        first = first->next;
+        free(q);
+        return x;
+    }
+    else
+    {
+        
+        for(int i = 0; i < index-1; i++)
+        {
+            q = p;
+            p=p->next;
+        }
+        q->next = p->next;
+        x = p->data;
+        free(p);
+        return x;
+    }
+
+}
+
+
+int isSorted(struct Node *p)
+{
+    int x = INT_MIN;
+
+    while(p)
+    {
+        if(p->data < x)
+            return 0;
+        
+        x = p->data;
+        p = p->next;
+    }
+    return 1;
+}
+
+void RemoveDuplicate(struct Node *p)
+{
+    struct Node *q = p->next;
+    while(q)
+    {
+        if(p->data != q->data)
+        {
+            p = q;
+            q = q->next;
+        }
+        else
+        {
+            p->next=q->next;
+            free(q);
+            q=p->next;
+        }
+    }
+}
+
+// reverses the elements, not the pointers..
+void Reverse1(struct Node* p)
+{
+    int *A;
+    struct Node *q = p;
+    int i = 0;
+
+    A = (int *) malloc(sizeof(int) * count(p));
+
+    while(q != NULL)
+    {
+        A[i] = q->data;
+        q = q->next;
+        i++;
+    }
+    i--;
+    q = p;
+    while(q != NULL)
+    {
+        q->data = A[i];
+        i--;
+        q = q->next;
+    }
+    free(A);
+}
+
+void Reverse2(struct Node* p)
+{
+    struct Node* q= NULL, *r = NULL;
+    while(p != NULL)
+    {
+        r = q;
+        q = p;
+        p = p->next;
+        q->next = r;
+    }
+    first = q;
+}
+
+void Reverse3(struct Node *q, struct Node *p)
+{
+    if(p)
+    {
+        Reverse3(p, p->next);
+        p->next = q;
+    }
+    else
+        first = q;
+}
+
 int main()
 {
-    //Insert(first, 0, 10);
-    //Insert(first, 1, 20);
-    //Insert(first, 2, 30);
-    //Insert(first, 0, 3);
-    int A[] = {10, 20 , 30 ,40, 50};
-    //create(A, 5);
+    int A[] = {10, 20, 20, 20, 30 ,40, 50};
+    create(A, 7);
 
-    SortedInsert(first, 55);
-    SortedInsert(first, 55);
-
+    Reverse3(NULL, first);
     display(first);
+
     printf("\n\n");
 
 }
