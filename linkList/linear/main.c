@@ -6,7 +6,7 @@ struct Node
 {
     int data;
     struct Node* next;
-}*first=NULL;
+}*first=NULL, *second=NULL, *third=NULL;
 
 void create(int A[], int n)
 {
@@ -27,6 +27,29 @@ void create(int A[], int n)
         last = t;
     }
 }
+
+
+void create2(int A[], int n)
+{
+    int i;
+    struct Node *t, *last;
+    second = (struct Node*) malloc(sizeof(struct Node));
+    second->data = A[0];
+    second->next = NULL;
+
+    last = second;
+
+    for(int i = 1; i < n; i++)
+    {
+        t = (struct Node*) malloc(sizeof(struct Node));
+        t->data = A[i];
+        t->next = NULL;
+        last->next = t;
+        last = t;
+    }
+}
+
+
 
 void display(struct Node* p)
 {
@@ -308,13 +331,81 @@ void Reverse3(struct Node *q, struct Node *p)
         first = q;
 }
 
+void Concat(struct Node* p, struct Node *q)
+{
+    third = p;
+    while(p->next != NULL)
+        p = p->next;
+    p->next = q;
+}
+
+void Merge(struct Node *p, struct Node* q)
+{
+    struct Node *last;
+    if(p->data < q->data)
+    {
+        third = last= p;
+        p = p->next;
+        last->next = NULL;
+    }
+    else
+    {
+        third = last= q;
+        q = q->next;
+        last->next = NULL;
+    }
+    while( p && q)
+    {
+        if(p->data < q->data)
+        {
+            last->next = p;
+            last = p;
+            p = p->next;
+            last->next = NULL;
+        }
+        else
+        {
+            last->next = q;
+            last = q;
+            q = q->next;
+            last->next = NULL;
+        }
+    }
+    if(p)
+    {
+        last->next = p;
+    }
+    else
+        last->next = q;
+}
+
+int isLoop(struct Node *f)
+{
+    struct Node* p, *q;
+    p = q = f;
+
+    while(p && q && p!=q)
+    {
+        p = p->next;
+        q = q ? q->next : q;
+    }
+    if(p == q)
+    {
+        return 1;
+    }
+    else
+        return 0;
+}
+
 int main()
 {
-    int A[] = {10, 20, 20, 20, 30 ,40, 50};
-    create(A, 7);
+    int A[] = {10, 20, 30 ,40, 50};
+    int B[] ={152,222,333,444,555};
+    create(A, 5);
+    create2(B, 5); 
+    Merge(second, first);
 
-    Reverse3(NULL, first);
-    display(first);
+    display(third);
 
     printf("\n\n");
 
