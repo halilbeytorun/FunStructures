@@ -3,7 +3,7 @@
 
 // Queue will be used for binary tree creation, it is needed for level by level creation.
 #include "queue.h"
-
+#include "stack.h"
 
 struct Node *root = NULL;
 
@@ -79,11 +79,54 @@ void preOrder(struct Node* p)
     }
 }
 
+void IPreOrder(struct Node* p)
+{
+    struct Stack stk;
+    StackCreate(&stk, 100);
+
+    while(p || !isEmptyStack(&stk))
+    {
+        if(p)
+        {
+            printf("%d ", p->data);
+            push(&stk, p);
+            p = p->lchild;
+        }
+        else
+        {
+            p = pop(&stk);
+            p = p->rchild;
+        }
+    }
+}
+
+
+void IInOrder(struct Node* p)
+{
+    struct Stack stk;
+    StackCreate(&stk, 100);
+
+    while(p || !isEmptyStack(&stk))
+    {
+        if(p)
+        {
+            push(&stk, p);
+            p = p->lchild;
+        }
+        else
+        {
+            p = pop(&stk);
+            printf("%d ", p->data);
+            p = p->rchild;
+        }
+    }
+}
+
+
 
 int main()
 {
     createTree();
-    preOrder(root);
-    printf("\n Post Order ");
-    postOrder(root);
+    printf("\n In Order ");
+    IInOrder(root);
 }

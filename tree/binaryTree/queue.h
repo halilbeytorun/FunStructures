@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
 
 #ifndef queue_h
 #define queue_h
+#include <stdio.h>
+#include <stdlib.h>
 
 struct Node
 {
