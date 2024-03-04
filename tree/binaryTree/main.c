@@ -146,10 +146,72 @@ void LevelOrder(struct Node*root)
     }
 }
 
+int count(struct Node *root)
+{
+    if(root)
+        return count(root->lchild) + count(root->rchild) + 1;
+    return 0;
+}
+
+int height(struct Node *root)
+{
+    if(root==0)
+        return 0;
+    int x,y;
+    x = height(root->lchild);
+    y = height(root->rchild);
+
+    if(x > y)
+        return x + 1;
+    else
+        return y + 1;
+}
+
+int countLeaf(struct Node* root)
+{
+    if(root)
+    {
+        int x,y;
+        x = countLeaf(root->lchild);
+        y = countLeaf(root->rchild);
+        if(root->lchild == NULL && root->rchild == NULL)
+            return 1;
+        else
+        {
+            return x + y;
+        }
+    }
+    return 0;
+}
+
+
+int countDeg2(struct Node* root)
+{
+    if(root)
+    {
+        int x,y;
+        x = countLeaf(root->lchild);
+        y = countLeaf(root->rchild);
+        if(root->lchild != NULL && root->rchild != NULL)
+            return x + y + 1;
+        else
+        {
+            return x + y;
+        }
+    }
+    return 0;
+}
+
+
 
 int main()
 {
     createTree();
-    printf("\n Level Order ");
-    LevelOrder(root);
+    
+    printf("Count %d \n", count(root));
+    printf("Height %d \n", height(root));
+    printf("Count Leaf %d \n", countLeaf(root));
+    printf("countDeg2 %d \n", countDeg2(root));
+
+    
 }
