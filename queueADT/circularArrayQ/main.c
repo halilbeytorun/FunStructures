@@ -4,6 +4,10 @@
 // rear will be pointing to into element while front will be pointing empty space
 // empty condition: rear == front
 // full condition: (rear+1)%size == front   // one empty space is there in full state
+//   _ 2 3 4 5 6 7 8 _ 
+//   ^             ^
+//   |             |
+//   front         rear
 struct Queue
 {
     int size;
