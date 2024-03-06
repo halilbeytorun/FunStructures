@@ -22,7 +22,7 @@ struct Queue
     struct Node **Q;
 };
 
-void create(struct Queue *q, int size)
+void createQueue(struct Queue *q, int size)
 {
     q->size = size;
     q->front = q->rear = 0;
@@ -54,7 +54,7 @@ struct Node* dequeue(struct Queue *q)
     return x;
 }
 
-int isEmpty(struct Queue *q)
+int isEmptyQueue(struct Queue *q)
 {
     return q->rear == q->front;
 }

@@ -12,14 +12,14 @@ void createTree()
     struct Node *p, *t;
     int x;
     struct Queue q;
-    create(&q, 100);
+    createQueue(&q, 100);
     printf("Enter root value ");
     scanf("%d", &x);
     root = (struct Node*) malloc(sizeof(struct Node));
     root->data = x;
     root->lchild = root->rchild = NULL;
     enqueue(&q, root);
-    while(!isEmpty(&q))
+    while(!isEmptyQueue(&q))
     {
         p = dequeue(&q);
         printf("enter left child of %d ", p->data);
@@ -123,25 +123,25 @@ void IInOrder(struct Node* p)
 }
 
 
-void LevelOrder(struct Node*root)
+void LevelOrder(struct Node* p)
 {
     struct Queue q;
-    create(&q, 100);
-    printf("%d ", root->data);
-    enqueue(&q, root);
+    createQueue(&q, 100);
+    printf("%d ", p->data);
+    enqueue(&q, p);
 
-    while(!isEmpty(&q))
+    while(!isEmptyQueue(&q))
     {
-        root = dequeue(&q);
-        if(root->lchild)
+        p = dequeue(&q);
+        if(p->lchild)
         {
-            printf("%d ", root->lchild->data);
-            enqueue(&q, root->lchild);
+            printf("%d ", p->lchild->data);
+            enqueue(&q, p->lchild);
         }
-        if(root->rchild)
+        if(p->rchild)
         {
-            printf("%d ", root->rchild->data);
-            enqueue(&q, root->rchild);
+            printf("%d ", p->rchild->data);
+            enqueue(&q, p->rchild);
         }        
     }
 }
@@ -175,7 +175,7 @@ int countLeaf(struct Node* root)
         x = countLeaf(root->lchild);
         y = countLeaf(root->rchild);
         if(root->lchild == NULL && root->rchild == NULL)
-            return 1;
+            return x + y + 1;   // x and y have no effect here but put to be similar to other counting algorithms.
         else
         {
             return x + y;
