@@ -27,7 +27,7 @@ std::tuple<double,double,double> edifferent(int x, int n)
     return std::make_tuple(r + p/f,p,f);
 }
 
-/// @brief Horner's method.
+/// @brief Horner's method. 
 /// @param x 
 /// @param n 
 /// @return 

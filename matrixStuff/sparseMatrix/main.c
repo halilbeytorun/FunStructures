@@ -2,9 +2,9 @@
 #include<stdlib.h>
 struct Element
 {
-    int i;
-    int j;
-    int x;
+    int i;// row number
+    int j;// column number
+    int x;  // element itself
 };
 struct Sparse
 {

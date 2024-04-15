@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/// @brief Intendet to store only non-zero elements in itself.
 struct Matrix
 {
     int *A;
