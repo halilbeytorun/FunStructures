@@ -146,6 +146,100 @@ struct Node* RInsert(struct Node* t, int key)
     }
 }
 
+int Height(struct Node* p)
+{
+    if(!p)
+        return 0;
+    int x, y;
+    x = Height(p->lchild);
+    y = Height(p->rchild);
+    return x > y ? x+1 : y+1;
+}
+
+struct Node* InPre(struct Node* p)
+{
+    while(p && p->rchild)
+        p = p->rchild;
+    return p;
+}
+
+struct Node * InSuc(struct Node* p)
+{
+    while(p && p->lchild)
+        p = p->lchild;
+    return p;
+}
+struct Node* Delete(struct Node* p, int key)
+{
+    if(p == NULL)
+    {
+        return NULL;
+    }
+    if(p->rchild == NULL && p->lchild == NULL)
+    {
+        if(p->data == key)
+        {
+            if(p == root)
+                root = NULL;
+            free(p);
+            return NULL;
+        }
+        return p;
+    }
+    if(p->data < key)
+    {
+        p->lchild = Delete(p->lchild, key);
+    }
+    else if(p->data > key)
+    {
+        p->rchild = Delete(p->rchild, key);
+    }
+    else
+    {
+        struct Node *q;
+        if(Height(p->lchild) > Height(p->rchild))
+        {
+            q = InPre(p->lchild);
+            p->data = q->data;
+            p->lchild = Delete(p->lchild, q->data);
+        }
+        else
+        {
+            q = InSuc(p->rchild);
+            p->data = q->data;
+            p->rchild = Delete(p->rchild, q->data);
+        }
+    }
+
+    p->height = Height(p);
+
+    if(BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 1) // L1 rotation
+    {
+        return LLRotation(p);
+    }
+    else if(BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == -1) // L -1 rotation
+    {
+        return LRRotation(p);
+    }
+    else if(BalanceFactor(p) == -2 && BalanceFactor(p->lchild) == -1) 
+    {
+        return RRRotation(p);
+    }
+    else if(BalanceFactor(p) == -2 && BalanceFactor(p->lchild) == 1) 
+    {
+        return RLRotation(p);
+    }
+    else if(BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 0) // L0 rotation
+    {
+        return LLRotation(p);
+    }
+    else if(BalanceFactor(p) == -2 && BalanceFactor(p->lchild) == 0) 
+    {
+        return RRRotation(p);
+    }
+
+}
+
 int main()
 {
     root = RInsert(root, 50);
