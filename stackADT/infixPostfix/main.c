@@ -1,13 +1,15 @@
-    #include<stdio.h>
-    #include<stdlib.h>
-    #include<string.h>
-    
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+// An algorithmm to convert summation multiplication divition strings(expressions) to Postfix version in one loop.
+
 struct Stack{
     int size;
     int top;
     char *S;
 };
-    
+
 void push(struct Stack *st, char x){
     if(st->top == st->size - 1)
         printf("Stack Overflow\n");
