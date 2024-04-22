@@ -9,6 +9,7 @@ struct Node
     struct Node *rchild;
 } *root=NULL;
 
+// TODO: Implement tree printing function.
 
 int NodeHeight(struct Node* p)
 {
@@ -146,16 +147,6 @@ struct Node* RInsert(struct Node* t, int key)
     }
 }
 
-int Height(struct Node* p)
-{
-    if(!p)
-        return 0;
-    int x, y;
-    x = Height(p->lchild);
-    y = Height(p->rchild);
-    return x > y ? x+1 : y+1;
-}
-
 struct Node* InPre(struct Node* p)
 {
     while(p && p->rchild)
@@ -197,7 +188,7 @@ struct Node* Delete(struct Node* p, int key)
     else
     {
         struct Node *q;
-        if(Height(p->lchild) > Height(p->rchild))
+        if(NodeHeight(p->lchild) > NodeHeight(p->rchild))
         {
             q = InPre(p->lchild);
             p->data = q->data;
@@ -211,7 +202,7 @@ struct Node* Delete(struct Node* p, int key)
         }
     }
 
-    p->height = Height(p);
+    p->height = NodeHeight(p);
 
     if(BalanceFactor(p) == 2 && BalanceFactor(p->lchild) == 1) // L1 rotation
     {
