@@ -125,7 +125,7 @@ struct Node* InsideInsert(struct Node* t, struct Node* father, int key)
     }
     else
     {
-        if(t->data < key)
+        if(key < t->data)
         {
             t->lchild = InsideInsert(t->lchild, t, key);
             if(t->color == Red && t->lchild->color == Red)
@@ -139,8 +139,9 @@ struct Node* InsideInsert(struct Node* t, struct Node* father, int key)
                     return HandleColorRL(t, father);
                 }
             }
+            return t;
         }
-        else if(t->data > key)
+        else if(key > t->data)
         {
             t->rchild = InsideInsert(t->rchild, t, key);
             if(t->color == Red && t->rchild->color == Red)
@@ -153,10 +154,11 @@ struct Node* InsideInsert(struct Node* t, struct Node* father, int key)
                 {
                     return HandleColorLR(t, father);
                 }
-            }                  
+            }
+            return t;              
         }
-
     }
+    return t;
 }
 
 struct Node* RInsert(struct Node* t, int key)
@@ -167,14 +169,15 @@ struct Node* RInsert(struct Node* t, int key)
         t->lchild = t->rchild = NULL;
         t->data = key;
         t->color = Black;   // root node is always black.
+        root = t;
     }
     else
     {
-        if(t->data < key)
+        if(key < t->data)
         {
             t->lchild = InsideInsert(t->lchild, t, key);    // handling
         }
-        else if(t->data > key)
+        else if(key > t->data)
         {
             t->rchild = InsideInsert(t->rchild, t, key);
         }
@@ -186,7 +189,8 @@ struct Node* RInsert(struct Node* t, int key)
 int main()
 {
     RInsert(root, 10);
-    root->color = Black;
+    RInsert(root, 20);
+    RInsert(root, 30);
 
     
     return 0;
