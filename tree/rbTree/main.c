@@ -18,6 +18,29 @@ struct Node
 // TODO: Implement tree printing function.
 // TODO: Needs to be tested.
 
+
+void printTree(struct Node* root, int level) {
+    if (root == NULL)
+        return;
+
+    // Increase indentation for each level
+    level += 5;
+
+    // Print right child first
+    printTree(root->rchild, level);
+
+    // Print current node after spaces
+    printf("\n");
+    for (int i = 5; i < level; i++)
+        printf(" ");
+    printf("%d(%s)\n", root->data, root->color == Red ? "Red" : "Black");
+
+    // Print left child
+    printTree(root->lchild, level);
+}
+
+
+
 struct Node* HandleColorLL(struct Node* t, struct Node* father)
 {
     struct Node* uncle = father->rchild;
@@ -128,7 +151,7 @@ struct Node* InsideInsert(struct Node* t, struct Node* father, int key)
         if(key < t->data)
         {
             t->lchild = InsideInsert(t->lchild, t, key);
-            if(t->color == Red && t->lchild->color == Red)
+            if(t->color == Red && t->lchild && t->lchild->color == Red)
             {
                 if(father->lchild == t)
                 {
@@ -144,7 +167,7 @@ struct Node* InsideInsert(struct Node* t, struct Node* father, int key)
         else if(key > t->data)
         {
             t->rchild = InsideInsert(t->rchild, t, key);
-            if(t->color == Red && t->rchild->color == Red)
+            if(t->color == Red && t->rchild && t->rchild->color == Red)
             {
                 if(father->rchild == t)
                 {
@@ -189,9 +212,25 @@ struct Node* RInsert(struct Node* t, int key)
 int main()
 {
     RInsert(root, 10);
-    RInsert(root, 20);
-    RInsert(root, 30);
+    // printf("Red-Black Tree:\n");
+    // printTree(root, 0);
 
+    RInsert(root, 20);
+    // printf("Red-Black Tree:\n");
+    // printTree(root, 0);    
+    
+    RInsert(root, 30);
+    // printf("Red-Black Tree:\n");
+    // printTree(root, 0);
+
+    RInsert(root, 40);
+    printf("Red-Black Tree:\n");
+    printTree(root, 0); // TODO STILL PROBLEMATIC
+
+    RInsert(root, 50);
+
+    // printf("Red-Black Tree:\n");
+    // printTree(root, 0);
     
     return 0;
 }
