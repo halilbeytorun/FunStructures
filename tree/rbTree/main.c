@@ -50,9 +50,9 @@ struct Node* HandleColorLL(struct Node* t, struct Node* father)
         uncle->color = Black;
         t->color = Black;
         father->color = father == root ? Black : Red;
-        return father->lchild;
+        return father;
     }
-    else
+    else    // Rotation occurs
     {
         father->lchild = t->rchild;
         t->rchild = father;
@@ -60,7 +60,7 @@ struct Node* HandleColorLL(struct Node* t, struct Node* father)
         father->color = Red;
         if(father == root)
             root = t;
-        return father->lchild;
+        return t;
     }
 }
 
@@ -73,7 +73,7 @@ struct Node* HandleColorRL(struct Node* t, struct Node* father)
         uncle->color = Black;
         t->color = Black;
         father->color = father==root ? Black : Red;
-        return father->rchild;
+        return father;
     }
     else
     {
@@ -85,7 +85,10 @@ struct Node* HandleColorRL(struct Node* t, struct Node* father)
         B->lchild = C->rchild;
         C->rchild = B;
         C->lchild = A;
-        return father->rchild;
+
+        C->color = Black;
+        A->color = Red;
+        return C;
     }
 }
 
@@ -98,7 +101,7 @@ struct Node* HandleColorRR(struct Node* t, struct Node* father)
         uncle->color = Black;
         t->color = Black;
         father->color = father == root ? Black : Red;
-        return father->rchild;
+        return father;
     }
     else
     {
@@ -108,7 +111,7 @@ struct Node* HandleColorRR(struct Node* t, struct Node* father)
         father->color = Red;
         if(father == root)
             root = t;
-        return father->rchild;
+        return t;
     }
 }
 
@@ -121,7 +124,7 @@ struct Node* HandleColorLR(struct Node* t, struct Node* father)
         uncle->color = Black;
         t->color = Black;
         father->color = father==root ? Black : Red;
-        return father->lchild;
+        return father;
     }
     else
     {
@@ -133,57 +136,15 @@ struct Node* HandleColorLR(struct Node* t, struct Node* father)
         B->rchild = C->lchild;
         C->lchild = B;
         C->rchild = A;
-        return father->lchild;
+
+        C->color = Black;
+        A->color = Red;
+        return C;
     }
 }
 
-struct Node* InsideInsert(struct Node* t, struct Node* father, int key)
-{
-    if(NULL == t)
-    {
-        t = (struct Node*) malloc(sizeof(struct Node));
-        t->lchild = t->rchild = NULL;
-        t->data = key;
-        t->color = Red;     // child node is always black.
-    }
-    else
-    {
-        if(key < t->data)
-        {
-            t->lchild = InsideInsert(t->lchild, t, key);
-            if(t->color == Red && t->lchild && t->lchild->color == Red)
-            {
-                if(father->lchild == t)
-                {
-                    return HandleColorLL(t, father);
-                }
-                else
-                {
-                    return HandleColorRL(t, father);
-                }
-            }
-            return t;
-        }
-        else if(key > t->data)
-        {
-            t->rchild = InsideInsert(t->rchild, t, key);
-            if(t->color == Red && t->rchild && t->rchild->color == Red)
-            {
-                if(father->rchild == t)
-                {
-                    return HandleColorRR(t, father);
-                }
-                else
-                {
-                    return HandleColorLR(t, father);
-                }
-            }
-            return t;              
-        }
-    }
-    return t;
-}
-
+// Red Black Tree insertion. The insertion and rotations are done in grandfather part of the recursion function since the root of the rotation and effected parts are startong from there..
+// therefore grandfather can change in those cases, so something else needed to be returned. That is the reason.
 struct Node* RInsert(struct Node* t, int key)
 {
     if(NULL == t)
@@ -191,18 +152,33 @@ struct Node* RInsert(struct Node* t, int key)
         t = (struct Node*) malloc(sizeof(struct Node));
         t->lchild = t->rchild = NULL;
         t->data = key;
-        t->color = Black;   // root node is always black.
-        root = t;
+        t->color = Red;   // Handle root node at main function.
     }
     else
     {
         if(key < t->data)
         {
-            t->lchild = InsideInsert(t->lchild, t, key);    // handling
+            t->lchild = RInsert(t->lchild, key);
+            if(t->lchild->color == Red && t->lchild->lchild && t->lchild->lchild->color == Red)
+            {
+                return HandleColorLL(t->lchild, t);
+            }
+            else if(t->lchild->color == Red && t->lchild->rchild && t->lchild->rchild->color == Red)
+            {
+                return HandleColorLR(t->lchild, t);
+            }
         }
         else if(key > t->data)
         {
-            t->rchild = InsideInsert(t->rchild, t, key);
+            t->rchild = RInsert(t->rchild, key);
+            if(t->rchild->color == Red && t->rchild->rchild && t->rchild->rchild->color == Red)
+            {
+                return HandleColorRR(t->rchild, t);
+            }
+            else if(t->rchild->color == Red && t->rchild->lchild && t->rchild->lchild->color == Red)
+            {
+                return HandleColorRL(t->rchild, t);
+            }
         }
     }
     return t;
@@ -211,26 +187,24 @@ struct Node* RInsert(struct Node* t, int key)
 
 int main()
 {
-    RInsert(root, 10);
-    // printf("Red-Black Tree:\n");
-    // printTree(root, 0);
+    root = RInsert(root, 10);
+    root->color = Black;
 
-    RInsert(root, 20);
-    // printf("Red-Black Tree:\n");
-    // printTree(root, 0);    
-    
+    RInsert(root, 20);  
     RInsert(root, 30);
-    // printf("Red-Black Tree:\n");
-    // printTree(root, 0);
 
+    RInsert(root, 50);
     RInsert(root, 40);
+    RInsert(root, 60);
+    RInsert(root, 70);
+    // RInsert(root, 80);
+
+    // RInsert(root, 4);
+    // RInsert(root, 8);
+
+
     printf("Red-Black Tree:\n");
     printTree(root, 0); // TODO STILL PROBLEMATIC
 
-    RInsert(root, 50);
-
-    // printf("Red-Black Tree:\n");
-    // printTree(root, 0);
-    
     return 0;
 }
