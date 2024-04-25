@@ -15,9 +15,8 @@ struct Node
     struct Node *rchild;
 } *root=NULL;
 
-// TODO: Implement tree printing function.
-// TODO: Needs to be tested.
-
+// TODO: Implement deletion function also.
+// TODO: Adapt names in the input of rotation functions.
 
 void printTree(struct Node* root, int level) {
     if (root == NULL)

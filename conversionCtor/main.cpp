@@ -8,6 +8,7 @@ public:
 	{
 		std::cout << "Default ctor\n";
 	}
+	// If this is made explicit, then the code won't compile.
 	A(int)
 	{
 		std::cout << "conversion ctor\n";
