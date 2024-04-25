@@ -36,12 +36,27 @@ struct hib
 template<typename T>
 using hib_t = typename hib<T>::type;
 
+template<typename T>
+struct my_remove_pointer
+{
+	using type = T;
+};
 
+template<typename T>
+struct my_remove_pointer<T*>
+{
+	using type = T;
+};
+
+template<typename T>
+using my_remove_pointer_t = typename my_remove_pointer<T>::type;
 
 int main()
 {
 	hib_t<int> test{};
 	// std example
 	std::remove_pointer_t<int*> test2{};
+	my_remove_pointer_t<int*> test3{};
+	my_remove_pointer_t<int> test4{};
 
 }
