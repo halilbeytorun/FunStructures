@@ -2,35 +2,35 @@
 #include <stdlib.h>
 
 
-// Helper function to calculate the height of the tree
-int height(int n) {
-    int h = 0;
-    while ((1 << h) <= n)
-        h++;
-    return h - 1;
+void swap(int* x, int* y)
+{
+    int temp = *x;
+    *x = *y;
+    *y = temp;
 }
 
-// Helper function to print spaces
-void printSpaces(int n) {
-    for (int i = 0; i < n; i++)
-        printf(" ");
-}
-
-// Function to print max heap tree
-void printMaxHeapTree(int A[], int n) {
-    int h = height(n);
-    int max_nodes = 1 << h;
-    int nodes = 1;
-
-    int i = 1;
-    while (i <= n) {
-        printSpaces((max_nodes - nodes) / 2); // Print leading spaces
-        for (int j = 0; j < nodes && i <= n; j++) {
-            printf("%d ", A[i++]); // Print nodes
-            printSpaces((max_nodes - nodes)); // Print spaces between nodes
+/// @brief Create a heap data structure from a given random array.
+/// @param A Random array
+/// @param n The size of the array.
+/// @details The idea is to go from leafs to root, while going check every node's child, switch with the biggest child if the child is bigger. 
+void Heapify(int A[], int n)
+{
+    for(int i = n-1; i > 0; i--)
+    {
+        int j = 2 * i;
+        if(j >= n)
+            continue;
+        else if(j + 1 < n)
+        {
+            j = (A[j] > A[j + 1] ? j : j+1);
+            if(A[i] < A[j])
+                swap(&A[i], &A[j]);
         }
-        printf("\n");
-        nodes *= 2; // Double the number of nodes for next level
+        else
+        {
+            if(A[i] < A[j])
+                swap(&A[i], &A[j]);
+        }
     }
 }
 
@@ -85,8 +85,9 @@ int main()
     int A[] = {0 /* this index won't be used*/, 10, 20, 30, 25, 5, 40, 35,1,2,3,4};
     int i;
     int n = sizeof(A) / sizeof(int);
-    for(i = 1; i < n; i++)
-        Insert(A, i);
+    // for(i = 1; i < n; i++)
+    //     Insert(A, i);
+    Heapify(A, n);
     for(i = n - 1; i >= 1; i--)
     {
         Delete(A, i);
