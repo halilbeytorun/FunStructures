@@ -36,6 +36,17 @@ namespace impl
         std::cout << a << " ";
     }
 
+    template<typename T, std::size_t n>
+    std::enable_if_t<!is_stl_container<T>::value> LoggerImpl(const T (&a)[n])
+    {
+        for(int i = 0; i < n; i++)
+        {
+            std::cout << a[i] << " ";
+        }
+        std::cout << "\n";
+    }
+
+
     template<typename C>
     std::enable_if_t<is_stl_container<C>::value> LoggerImpl(const C& container)
     {
@@ -83,5 +94,10 @@ int main()
 	test.push_back("ali");
 	test.push_back("veli");
 	Logger(test);
+
+    int a[] = {0, 1, 2, 3, 4, 5};
+    Logger(a);
+    Logger(a, test);
+
 }
 
