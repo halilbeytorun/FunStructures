@@ -27,8 +27,8 @@ namespace impl
             decltype(std::declval<T>().end())
         >
     > : std::true_type {};
-    template<>
-    struct is_stl_container<std::string> : std::false_type{};
+    // template<>
+    // struct is_stl_container<std::string> : std::false_type{};
 
     template<typename T>
     std::enable_if_t<!is_stl_container<T>::value> LoggerImpl(const T& a)
@@ -39,13 +39,20 @@ namespace impl
     template<typename C>
     std::enable_if_t<is_stl_container<C>::value> LoggerImpl(const C& container)
     {
-        for (auto iter = container.begin(); iter != container.end(); iter++)
+        if constexpr(std::is_same<C, std::string>::value)
         {
-            LoggerImpl(*iter);
-            if constexpr(is_stl_container<typename C::value_type>::value)
+            std::cout << container;
+        }
+        else
+        {
+            for (auto iter = container.begin(); iter != container.end(); iter++)
             {
-                if(container.end() != std::next(iter))
-                    std::cout << '\n';
+                LoggerImpl(*iter);
+                if constexpr(is_stl_container<typename C::value_type>::value)
+                {
+                    if(container.end() != std::next(iter))
+                        std::cout << '\n';
+                }
             }
         }
     }
@@ -70,7 +77,11 @@ void Logger(const Ts& ...args)
 
 int main()
 {
-	const char * mumin = "asd\n \t";
-	Logger(mumin);
+	std::vector<std::string> test;
+	test.push_back("halil");
+	test.push_back("ahmet");
+	test.push_back("ali");
+	test.push_back("veli");
+	Logger(test);
 }
 
