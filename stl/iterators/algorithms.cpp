@@ -179,8 +179,8 @@ int main()
 
 	{
 		Logger("Copy algorithm written by me. Note that destination container can be different container.");
-		std::vector<int>::value_type;
-		std::vector<double>::iterator::value_type;
+		std::vector<int>::value_type{};
+		std::vector<double>::iterator::value_type{};
 
 		std::vector<int> ivec{ 1,3,5,7,9,13 };
 		std::list<int> ilist(6);
@@ -190,8 +190,8 @@ int main()
 	}
 	{
 		Logger("Note that undefined behaviour would happen if destionation container does not have enoguh space and back_inserter is not used");
-		std::vector<int>::value_type;
-		std::vector<double>::iterator::value_type;
+		std::vector<int>::value_type{};
+		std::vector<double>::iterator::value_type{};
 
 		std::vector<int> ivec{ 1,3,5,7,9,13 };
 		std::list<int> ilist;
@@ -226,8 +226,8 @@ int main()
 
 	{
 		Logger("Back Insert Iterator example: ");
-		std::vector<int>::value_type;
-		std::vector<double>::iterator::value_type;
+		std::vector<int>::value_type{};
+		std::vector<double>::iterator::value_type{};
 
 		std::vector<int> ivec{ 1,3,5,7,9,13 };
 		std::list<int> ilist;

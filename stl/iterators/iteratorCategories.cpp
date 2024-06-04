@@ -30,8 +30,8 @@ void algo(Iter beg, Iter end)
 int main()
 {
 	// Containers have to have these nested types!	Look cppref containers named requiremens for more.
-	std::vector<int>::value_type;
-	std::vector<double>::iterator::value_type;
+	std::vector<int>::value_type{};
+	std::vector<double>::iterator::value_type{};
 
 	// Forward iterator
 	{
