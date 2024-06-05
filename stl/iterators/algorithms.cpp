@@ -74,6 +74,7 @@ InIter Find(InIter beg, InIter end, const Key& key)
 		}
 		beg++;
 	}
+	return end;
 }
 
 template<typename InIter, typename Pr>
@@ -87,6 +88,7 @@ InIter Find_If(InIter beg, InIter end, Pr cond)
 		}
 		beg++;
 	}
+	return end;
 }
 
 template<typename C>
